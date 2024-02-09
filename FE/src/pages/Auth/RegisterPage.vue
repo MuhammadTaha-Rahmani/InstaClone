@@ -32,7 +32,12 @@
             <q-icon name="password" />
           </template>
         </q-input>
-        <q-btn @click="register" class="full-width" color="pink-5" label="Register" />
+        <q-btn
+          class="full-width"
+          color="pink-5"
+          label="Register"
+          @click="register"
+        />
       </div>
     </div>
   </q-page>
@@ -40,16 +45,47 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import { api } from "src/boot/axios";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 export default {
   // name: 'PageName',
   setup() {
+    const $q = useQuasar();
+    const router = useRouter();
     const props = reactive({
       name: null,
       email: null,
       password: null,
     });
+    function register() {
+      api
+        .post("api/register", {
+          name: props.name,
+          email: props.email,
+          password: props.password,
+        })
+        .then((r) => {
+          if (r.data.status) {
+            $q.notify({
+              message: "Successfully Registered",
+              color: "positive",
+            });
+            router.push("/login");
+          } else {
+            $q.notify({
+              message: "Try again",
+              color: "negative",
+            });
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
     return {
       ...toRefs(props),
+      register,
     };
   },
 };
