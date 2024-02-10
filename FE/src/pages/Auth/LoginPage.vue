@@ -61,7 +61,7 @@ export default {
             $q.cookies.set("refresh_token", r.data.refresh_token);
             $q.cookies.set("expires_in", r.data.expires_in);
             router.push("/");
-          }else{
+          } else {
             $q.notify({
               message: "Some Thing Went wrong",
               color: "negative",
@@ -70,7 +70,11 @@ export default {
           }
         })
         .catch((e) => {
-          console.log(e);
+          $q.notify({
+            message: e.response.data.message,
+            color: "negative",
+            position: "top",
+          });
         });
     }
     return {
