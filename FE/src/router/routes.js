@@ -2,17 +2,41 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
+    children: [
+      {
+        path: "",
+        component: () => import("pages/IndexPage.vue"),
+        meta: {
+          requireauth: true,
+        },
+      },
+    ],
   },
   {
     path: "/register",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/Auth/RegisterPage.vue") }],
+    children: [
+      {
+        path: "",
+        component: () => import("pages/Auth/RegisterPage.vue"),
+        meta: {
+          authentication: true,
+        },
+      },
+    ],
   },
   {
     path: "/login",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/Auth/LoginPage.vue") }],
+    children: [
+      {
+        path: "",
+        component: () => import("pages/Auth/LoginPage.vue"),
+        meta: {
+          authentication: true,
+        },
+      },
+    ],
   },
 
   // Always leave this as last one,

@@ -38,6 +38,7 @@
           label="Register"
           @click="register"
         />
+        <p class="text-center text-grey">Already have an account? </p>
       </div>
     </div>
   </q-page>
