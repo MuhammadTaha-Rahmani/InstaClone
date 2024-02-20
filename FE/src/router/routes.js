@@ -12,6 +12,32 @@ const routes = [
       },
     ],
   },
+   {
+    path: "/posts",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/PostsPage.vue"),
+        meta: {
+          requireauth: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/addPost",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/AddPost.vue"),
+        meta: {
+          requireauth: true,
+        },
+      },
+    ],
+  },
   {
     path: "/register",
     component: () => import("layouts/MainLayout.vue"),

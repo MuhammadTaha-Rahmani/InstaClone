@@ -44,18 +44,18 @@ export default route(function (/* { store, ssrContext } */) {
         });
       }
     } else {
-      if (to.matched.some((record) => record.meta.authentication)) {
-        if (Cookies.get('access_token')) {
-          next({
-            path: "/",
-            query: { redirect: to.fullPath },
-          });
-        } else {
-          next()
-        }
-      } else {
+      // if (to.matched.some((record) => record.meta.authentication)) {
+      //   if (Cookies.get('access_token')) {
+      //     next({
+      //       path: "/",
+      //       query: { redirect: to.fullPath },
+      //     });
+      //   } else {
+      //     next()
+      //   }
+      // } else {
         next()
-      }
+      //}
     }
   });
   return Router;

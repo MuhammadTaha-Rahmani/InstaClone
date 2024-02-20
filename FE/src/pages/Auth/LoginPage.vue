@@ -4,7 +4,7 @@
       <div class="col-6 q-gutter-y-lg q-pa-lg shadow-10 glass">
         <q-input
           type="email"
-          v-model="email"
+          v-model="appData.email"
           standout="bg-pink-8 text-white"
           label="email"
         >
@@ -33,8 +33,10 @@ import { reactive, toRefs } from "vue";
 import { api } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import { useAppDataStore } from "src/stores/appData";
 export default {
   setup() {
+    const appData = useAppDataStore();
     const $q = useQuasar();
     const router = useRouter();
     const props = reactive({
@@ -44,7 +46,7 @@ export default {
     function login() {
       api
         .post("oauth/token", {
-          username: props.email,
+          username: appData.email,
           password: props.password,
           grant_type: "password",
           client_id: 2,
@@ -80,6 +82,7 @@ export default {
     return {
       ...toRefs(props),
       login,
+      appData,
     };
   },
 };
