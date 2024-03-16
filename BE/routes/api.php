@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,3 +41,7 @@ Route::post('/login', function (Request $request) {
         return Auth::check();
     }
 });
+Route::middleware('auth:api')->apiResource('posts', PostController::class);
+Route::get('my-posts', [PostController::class, 'myPost'])->middleware('auth:api');
+Route::middleware('auth:api')->post('like', [PostController::class, 'like']);
+

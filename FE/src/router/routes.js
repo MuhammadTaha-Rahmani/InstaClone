@@ -12,13 +12,26 @@ const routes = [
       },
     ],
   },
-   {
+  {
     path: "/posts",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
         component: () => import("pages/PostsPage.vue"),
+        meta: {
+          requireauth: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/posts/:id",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/ShowPost.vue"),
         meta: {
           requireauth: true,
         },

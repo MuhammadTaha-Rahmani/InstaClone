@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div class="row justify-center q-mt-xl">
-      <div class="col-6 q-gutter-y-lg q-pa-lg shadow-10 glass">
+      <div class="col-11 q-gutter-y-lg q-pa-lg shadow-10 glass">
         <q-input
           type="text"
           standout="bg-pink-8 text-white"
@@ -35,10 +35,13 @@
         <q-btn
           class="full-width"
           color="pink-5"
-          label="Register"
+          label="Create Account"
           @click="register"
         />
-        <p class="text-center text-grey">Already have an account? </p>
+        <p class="text-center text-grey">
+          Already have an account?
+          <span><a class="text-primary" href="login">Login</a></span>
+        </p>
       </div>
     </div>
   </q-page>

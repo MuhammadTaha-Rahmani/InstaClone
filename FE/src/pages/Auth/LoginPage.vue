@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div class="row justify-center q-mt-xl">
-      <div class="col-6 q-gutter-y-lg q-pa-lg shadow-10 glass">
+      <div class="col-11 q-gutter-y-lg q-pa-lg shadow-10 glass">
         <q-input
           type="email"
           v-model="appData.email"
@@ -22,6 +22,18 @@
             <q-icon name="password" />
           </template>
         </q-input>
+        <div class="row align-center justify-between">
+          <div>
+            <q-checkbox
+              class="text-grey-9"
+              v-model="right"
+              label="Remember Me"
+            />
+          </div>
+          <div class="self-center">
+            <a class="text-primary" href="#">Forgot your password?</a>
+          </div>
+        </div>
         <q-btn class="full-width" color="pink-5" label="Login" @click="login" />
       </div>
     </div>
@@ -29,7 +41,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import { api } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -38,7 +50,7 @@ export default {
   setup() {
     const appData = useAppDataStore();
     const $q = useQuasar();
-    const router = useRouter();
+    const $router = useRouter();
     const props = reactive({
       email: null,
       password: null,
@@ -62,7 +74,12 @@ export default {
             $q.cookies.set("access_token", r.data.access_token);
             $q.cookies.set("refresh_token", r.data.refresh_token);
             $q.cookies.set("expires_in", r.data.expires_in);
-            router.push("/");
+            api.defaults.headers.common = {
+              Authorization: "Bearer " + r.data.access_token,
+              "Content-Type": "application/json",
+              Accept: "application/json;charset=UTF-8",
+            };
+            $router.push("/");
           } else {
             $q.notify({
               message: "Some Thing Went wrong",
@@ -72,17 +89,19 @@ export default {
           }
         })
         .catch((e) => {
-          $q.notify({
-            message: e.response.data.message,
-            color: "negative",
-            position: "top",
-          });
+          // $q.notify({
+          //   message: e.response.data.message,
+          //   color: "negative",
+          //   position: "top",
+          // });
+          console.log(e);
         });
     }
     return {
       ...toRefs(props),
       login,
       appData,
+      right: ref(false),
     };
   },
 };
