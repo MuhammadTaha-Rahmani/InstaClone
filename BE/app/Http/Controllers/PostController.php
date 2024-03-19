@@ -34,7 +34,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::all();
+        $posts = Post::orderByDesc('id')->get();
         foreach ($posts as $post) {
             $likes = $post->likes;
             foreach ($likes as $like) {
