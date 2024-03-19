@@ -18,53 +18,7 @@
         :key="'posts - ' + index"
         class="col-12 col-md-6 col-lg-4"
       >
-        <q-card>
-          <q-item>
-            <q-item-section avatar>
-              <q-avatar>
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>{{ post.title }}</q-item-label>
-              <q-item-label caption>
-                {{ post.user.email }}
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-separator />
-
-          <q-card-section horizontal>
-            <q-card-section>
-              {{ post.description }}
-            </q-card-section>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-actions class="row justify-between">
-            <q-btn
-              @click="toggleLike(post.id, index)"
-              unelevated
-              flat
-              :label="post.likes.length"
-            >
-              <q-icon
-                :name="post.liked ? 'favorite' : 'favorite_outline'"
-                :color="post.liked ? 'negative' : 'white-outline'"
-              />
-            </q-btn>
-            <q-btn
-              @click="$router.push(`/posts/${post.id}`)"
-              unelevated
-              flat
-              label="more"
-              color="pink"
-            />
-          </q-card-actions>
-        </q-card>
+        <post-card @like="toggleLike(post.id , index)" :post="post"/>
       </div>
     </div>
   </q-page>
@@ -75,7 +29,11 @@ import { defineComponent, reactive, toRefs } from "vue";
 import { api } from "src/boot/axios";
 import { useAppDataStore } from "src/stores/appData";
 import { useRouter } from "vue-router";
+import PostCard from "src/components/PostCard.vue";
 export default defineComponent({
+  components:{
+    PostCard
+  } , 
   name: "IndexPage",
   setup() {
     const appData = useAppDataStore();

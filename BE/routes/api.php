@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\PostController;
 use App\Models\User;
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +46,7 @@ Route::post('/login', function (Request $request) {
 Route::middleware('auth:api')->apiResource('posts', PostController::class);
 Route::get('my-posts', [PostController::class, 'myPost'])->middleware('auth:api');
 Route::middleware('auth:api')->post('like', [PostController::class, 'like']);
+Route::get('testMail' , function(){
+     Mail::to('mtr.fear@gmail.com')->send(new WelcomeMail());
+});
 
